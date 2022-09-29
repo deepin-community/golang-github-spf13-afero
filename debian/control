@@ -1,0 +1,45 @@
+Source: golang-github-spf13-afero
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Uploaders: Anthony Fok <foka@debian.org>
+Section: golang
+Testsuite: autopkgtest-pkg-go
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+               dh-golang,
+               golang-any,
+               golang-github-pkg-sftp-dev (>= 1.10.1),
+               golang-golang-x-crypto-dev (>= 1:0.0~git20190820.60c769a),
+               golang-golang-x-text-dev (>= 0.3.3)
+Standards-Version: 4.6.0
+Vcs-Browser: https://salsa.debian.org/go-team/packages/golang-github-spf13-afero
+Vcs-Git: https://salsa.debian.org/go-team/packages/golang-github-spf13-afero.git
+Homepage: https://github.com/spf13/afero
+Rules-Requires-Root: no
+XS-Go-Import-Path: github.com/spf13/afero
+
+Package: golang-github-spf13-afero-dev
+Architecture: all
+Multi-Arch: foreign
+Depends: golang-github-pkg-sftp-dev (>= 1.10.1),
+         golang-golang-x-crypto-dev (>= 1:0.0~git20190820.60c769a),
+         golang-golang-x-text-dev (>= 0.3.3),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: FileSystem Abstraction System for Go
+ Afero is a filesystem framework providing a simple, uniform and universal
+ API interacting with any filesystem, as an abstraction layer providing
+ interfaces, types and methods. Afero has an exceptionally clean interface
+ and simple design without needless constructors or initialization methods.
+ .
+ Afero is also a library providing a base set of interoperable backend
+ filesystems that make it easy to work with afero while retaining all the
+ power and benefit of the os and ioutil packages.
+ .
+ Afero provides significant improvements over using the os package alone,
+ most notably the ability to create mock and testing filesystems without
+ relying on the disk.
+ .
+ It is suitable for use in any situation where you would consider using
+ the OS package as it provides an additional abstraction that makes it
+ easy to use a memory-backed filesystem during testing.  It also adds
+ support for the http filesystem for full interoperability.

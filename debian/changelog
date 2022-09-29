@@ -1,0 +1,271 @@
+golang-github-spf13-afero (1.6.0-1) unstable; urgency=medium
+
+  * New upstream version 1.6.0
+  * Bump Standards-Version to 4.6.0 (no change)
+  * Mark library package with "Multi-Arch: foreign"
+
+ -- Anthony Fok <foka@debian.org>  Sun, 05 Sep 2021 01:53:38 -0600
+
+golang-github-spf13-afero (1.5.1-1) unstable; urgency=medium
+
+  * New upstream version 1.5.1
+  * debian/control: Change Section from devel to golang
+  * debian/control: Bump Standards-Version to 4.5.1 (no change)
+
+ -- Anthony Fok <foka@debian.org>  Tue, 02 Feb 2021 15:57:54 -0700
+
+golang-github-spf13-afero (1.4.1-1) unstable; urgency=medium
+
+  [ Debian Janitor (Jelmer Vernooĳ) ]
+  * Bump debhelper from old 11 to 12.
+  * Set debhelper-compat version in Build-Depends.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit.
+  * Update standards version to 4.5.0, no changes needed.
+
+  [ Anthony Fok ]
+  * New upstream version 1.4.1
+  * debian/gbp.conf: Re-enable pristine-tar, and set debian-branch to
+    debian/sid for DEP-14 conformance
+  * Bump debhelper dependency to "Build-Depends: debhelper-compat (= 13)"
+  * Add "Rules-Requires-Root: no" to debian/control
+  * Update versioned dependencies as per go.mod
+  * Update package description from README.md
+  * debian/rules: Remove generated sftpfs/test/id_rsa* test files
+
+ -- Anthony Fok <foka@debian.org>  Fri, 23 Oct 2020 13:27:25 -0600
+
+golang-github-spf13-afero (1.2.2+really1.2.2-1) unstable; urgency=medium
+
+  * Revert to upstream version 1.2.2 now that Debian 10 "buster" is released.
+    See https://bugs.debian.org/928227 for background information.
+  * Bump Standards-Version to 4.4.0 (no change)
+
+ -- Anthony Fok <foka@debian.org>  Thu, 11 Jul 2019 12:18:29 -0600
+
+golang-github-spf13-afero (1.2.2+really1.2.1-1) unstable; urgency=medium
+
+  * Team upload.
+  * Revert all changes between 1.2.1-1 and 1.2.2-1.
+    See https://bugs.debian.org/928227 for a rationale.
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Sun, 02 Jun 2019 22:02:04 +0200
+
+golang-github-spf13-afero (1.2.2-1) unstable; urgency=medium
+
+  * New upstream version 1.2.2
+
+ -- Anthony Fok <foka@debian.org>  Sun, 14 Apr 2019 03:20:52 -0600
+
+golang-github-spf13-afero (1.2.1-1) unstable; urgency=medium
+
+  * New upstream version 1.2.1
+  * Bump Standards-Version to 4.3.0 (no change)
+
+ -- Anthony Fok <foka@debian.org>  Fri, 01 Feb 2019 11:08:02 -0700
+
+golang-github-spf13-afero (1.2.0-1) unstable; urgency=medium
+
+  * New upstream version 1.2.0
+  * Specify version for dependency on golang-golang-x-text-dev
+  * Update Maintainer address in debian/control
+
+ -- Anthony Fok <foka@debian.org>  Thu, 20 Dec 2018 00:17:32 -0700
+
+golang-github-spf13-afero (1.1.2-1) unstable; urgency=medium
+
+  * New upstream version 1.1.2
+  * Bump Standards-Version to 4.2.1 (no change)
+
+ -- Anthony Fok <foka@debian.org>  Wed, 19 Dec 2018 20:05:47 -0700
+
+golang-github-spf13-afero (1.1.1-1) unstable; urgency=medium
+
+  * New upstream version 1.1.1:
+    - Return error in Readdir on regular mem file (to prevent deadlock)
+  * Run "cme fix dpkg" which updates and rearranges debian/control,
+    and bumps Standards-Version to 4.1.4 (no change)
+
+ -- Anthony Fok <foka@debian.org>  Tue, 12 Jun 2018 06:02:36 -0600
+
+golang-github-spf13-afero (1.1.0-1) unstable; urgency=medium
+
+  [ Alexandre Viau ]
+  * Point Vcs-* urls to salsa.debian.org.
+
+  [ Anthony Fok ]
+  * Add debian/watch
+  * New upstream version 1.1.0
+
+ -- Anthony Fok <foka@debian.org>  Mon, 02 Apr 2018 23:39:21 -0600
+
+golang-github-spf13-afero (1.0.2-1) unstable; urgency=medium
+
+  [ Martín Ferrari ]
+  * Team upload.
+  * Automated cme updates.
+  * Stop using pristine-tar.
+
+  [ Dr. Tobias Quathamer ]
+  * Use debhelper v11
+  * New upstream version 1.0.2
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Mon, 05 Feb 2018 12:44:43 +0100
+
+golang-github-spf13-afero (1.0.0-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 1.0.0
+  * Update to Standards-Version 4.1.1
+    - Use Priority: optional
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Fri, 24 Nov 2017 22:38:05 +0100
+
+golang-github-spf13-afero (0.0~git20170901.0.ee1bd8e-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream snapshot.
+  * debian/control: Update Standards-Version (no changes).
+
+ -- Martín Ferrari <tincho@debian.org>  Wed, 06 Sep 2017 13:14:21 +0000
+
+golang-github-spf13-afero (0.0~git20170217.0.9be6508-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Bump Standards-Version to 4.0.0:
+    Use https form of the copyright-format URL in debian/copyright.
+  * Add "Testsuite: autopkgtest-pkg-go" to debian/control.
+
+ -- Anthony Fok <foka@debian.org>  Sun, 09 Jul 2017 22:35:10 -0600
+
+golang-github-spf13-afero (0.0~git20161226.0.90dd71e-1) unstable; urgency=medium
+
+  * New upstream version
+  * Adjust debian/copyright "Files" field to reflect
+    the recent renaming of sftpfs files
+
+ -- Anthony Fok <foka@debian.org>  Thu, 29 Dec 2016 02:51:35 -0700
+
+golang-github-spf13-afero (0.0~git20161109.0.06b7e5f-1) unstable; urgency=medium
+
+  * Team upload.
+  * Use debhelper v10
+  * Imported Upstream version 0.0~git20161109.0.06b7e5f
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Sun, 04 Dec 2016 13:59:40 +0100
+
+golang-github-spf13-afero (0.0~git20160919.0.52e4a6c-1) unstable; urgency=medium
+
+  * New upstream version for the Hugo 0.17 release.
+    - Fixes a bug that affects mtail,
+      see https://github.com/spf13/afero/pull/96
+
+ -- Anthony Fok <foka@debian.org>  Fri, 14 Oct 2016 10:06:14 -0600
+
+golang-github-spf13-afero (0.0~git20160821.0.20500e2-1) unstable; urgency=medium
+
+  * New upstream version
+
+ -- Anthony Fok <foka@debian.org>  Sun, 28 Aug 2016 00:59:27 -0600
+
+golang-github-spf13-afero (0.0~git20160605.0.1a8ecf8-1) unstable; urgency=medium
+
+  * New upstream version for the Hugo v0.16 release.
+  * Change "golang-go" to "golang-any" for Build-Depends.
+    And remove alternative dependency on the since-renamed
+    golang-x-text-dev transitional package.
+
+ -- Anthony Fok <foka@debian.org>  Wed, 08 Jun 2016 06:12:24 -0600
+
+golang-github-spf13-afero (0.0~git20160427.0.eb0cc80-1) unstable; urgency=medium
+
+  * New upstream snapshot
+  * Update debian/control
+    - Bump Standards-Version to 3.9.8 (no change)
+    - Use secure https URL for Vcs-Git too
+
+ -- Anthony Fok <foka@debian.org>  Fri, 29 Apr 2016 15:43:10 +0800
+
+golang-github-spf13-afero (0.0~git20160201.0.4c1d2aa-1) unstable; urgency=medium
+
+  * New upstream snapshot: Fix CopyOnWriteFs Stat to handle *os.PathError.
+    This fixes a recent bug in Hugo where the theme's static directory
+    was not synchronized.
+
+ -- Anthony Fok <foka@debian.org>  Thu, 04 Feb 2016 08:21:02 +0800
+
+golang-github-spf13-afero (0.0~git20160125.0.a5d3e7c-1) unstable; urgency=medium
+
+  * New upstream snapshot
+  * Remove architecture-specific Build-Depends on gccgo
+
+ -- Anthony Fok <foka@debian.org>  Fri, 29 Jan 2016 09:24:31 +0800
+
+golang-github-spf13-afero (0.0~git20160113.0.2ec8b79-1) unstable; urgency=medium
+
+  * New upstream snapshot: New SftpFs backend; various fixes and enhancements
+  * Allow the use of gccgo on architectures without golang-go
+  * Add (Build-)Depends on golang-github-pkg-sftp-dev
+  * Update debian/copyright
+
+ -- Anthony Fok <foka@debian.org>  Fri, 15 Jan 2016 04:16:21 -0700
+
+golang-github-spf13-afero (0.0~git20151221.0.e7cb826-1) unstable; urgency=medium
+
+  * New upstream snapshot: Add RegexpFilter
+
+ -- Anthony Fok <foka@debian.org>  Mon, 21 Dec 2015 12:32:29 -0700
+
+golang-github-spf13-afero (0.0~git20151220.0.98ed0a3-1) unstable; urgency=medium
+
+  * New upstream snapshot: Return improved errors from MemMapFs methods
+
+ -- Anthony Fok <foka@debian.org>  Mon, 21 Dec 2015 03:41:44 -0700
+
+golang-github-spf13-afero (0.0~git20151218.0.2101bdf-1) unstable; urgency=medium
+
+  * New upstream snapshot: Fix data races in MemMapFs
+
+ -- Anthony Fok <foka@debian.org>  Fri, 18 Dec 2015 17:18:39 -0700
+
+golang-github-spf13-afero (0.0~git20151215.0.36b075c-1) unstable; urgency=medium
+
+  * New upstream snapshot
+
+ -- Anthony Fok <foka@debian.org>  Thu, 17 Dec 2015 17:09:33 -0700
+
+golang-github-spf13-afero (0.0~git20151211.0.9d44c30-1) unstable; urgency=medium
+
+  * New upstream snapshot
+
+ -- Anthony Fok <foka@debian.org>  Tue, 15 Dec 2015 16:18:26 -0700
+
+golang-github-spf13-afero (0.0~git20151210.0.12f79b2-1) unstable; urgency=medium
+
+  * New upstream version 0.10.0 (0.0~git20151210.0.12f79b2)
+  * Add new dependency: golang-x-text-dev | golang-golang-x-text-dev
+
+ -- Anthony Fok <foka@debian.org>  Thu, 10 Dec 2015 17:34:54 -0700
+
+golang-github-spf13-afero (0.0~git20151126.0.12fcb8c-1) unstable; urgency=medium
+
+  * New upstream version 0.0~git20151126.0.12fcb8c
+
+ -- Anthony Fok <foka@debian.org>  Sat, 28 Nov 2015 21:51:20 -0700
+
+golang-github-spf13-afero (0.0~git20151122.0.0ad3406-1) unstable; urgency=medium
+
+  * New upstream version 0.0~git20151122.0.0ad3406
+
+ -- Anthony Fok <foka@debian.org>  Wed, 25 Nov 2015 01:09:57 -0700
+
+golang-github-spf13-afero (0.0~git20151117.0.3f6f746-1) unstable; urgency=medium
+
+  * New upstream version 0.0~git20151117.0.3f6f746
+
+ -- Anthony Fok <foka@debian.org>  Sat, 21 Nov 2015 02:52:46 -0700
+
+golang-github-spf13-afero (0.0~git20150908.0.6ced24d-1) unstable; urgency=medium
+
+  * Initial release (Closes: #799643)
+
+ -- Anthony Fok <foka@debian.org>  Mon, 21 Sep 2015 01:44:35 -0600
