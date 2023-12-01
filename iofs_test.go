@@ -1,3 +1,4 @@
+//go:build go1.16
 // +build go1.16
 
 package afero
@@ -5,15 +6,25 @@ package afero
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"io/fs"
+	"math/rand"
 	"os"
+	"path/filepath"
+	"runtime"
 	"testing"
 	"testing/fstest"
 	"time"
+
+	"github.com/spf13/afero/internal/common"
 )
 
 func TestIOFS(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		// TODO(bep): some of the "bad path" tests in fstest.TestFS fail on Windows
+		t.Skip("Skipping on Windows")
+	}
 	t.Parallel()
 
 	t.Run("use MemMapFs", func(t *testing.T) {
@@ -55,6 +66,94 @@ func TestIOFS(t *testing.T) {
 			t.Error(err)
 		}
 	})
+}
+
+func TestIOFSNativeDirEntryWhenPossible(t *testing.T) {
+	t.Parallel()
+
+	osfs := NewBasePathFs(NewOsFs(), t.TempDir())
+
+	err := osfs.MkdirAll("dir1/dir2", os.ModePerm)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	const numFiles = 10
+
+	var fileNumbers []int
+	for i := 0; i < numFiles; i++ {
+		fileNumbers = append(fileNumbers, i)
+	}
+	rand.Shuffle(len(fileNumbers), func(i, j int) {
+		fileNumbers[i], fileNumbers[j] = fileNumbers[j], fileNumbers[i]
+	})
+
+	for _, i := range fileNumbers {
+		f, err := osfs.Create(fmt.Sprintf("dir1/dir2/test%d.txt", i))
+		if err != nil {
+			t.Fatal(err)
+		}
+		f.Close()
+	}
+
+	dir2, err := osfs.Open("dir1/dir2")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer dir2.Close()
+
+	assertDirEntries := func(entries []fs.DirEntry, ordered bool) {
+		if len(entries) != numFiles {
+			t.Fatalf("expected %d, got %d", numFiles, len(entries))
+		}
+		for i, entry := range entries {
+			if _, ok := entry.(common.FileInfoDirEntry); ok {
+				t.Fatal("DirEntry not native")
+			}
+			if ordered && entry.Name() != fmt.Sprintf("test%d.txt", i) {
+				t.Fatalf("expected %s, got %s", fmt.Sprintf("test%d.txt", i), entry.Name())
+			}
+		}
+	}
+
+	dirEntries, err := dir2.(fs.ReadDirFile).ReadDir(-1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertDirEntries(dirEntries, false)
+
+	iofs := NewIOFS(osfs)
+
+	dirEntries, err = iofs.ReadDir("dir1/dir2")
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertDirEntries(dirEntries, true)
+
+	fileCount := 0
+	err = fs.WalkDir(iofs, "", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !d.IsDir() {
+			fileCount++
+		}
+
+		if _, ok := d.(common.FileInfoDirEntry); ok {
+			t.Fatal("DirEntry not native")
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if fileCount != numFiles {
+		t.Fatalf("expected %d, got %d", numFiles, fileCount)
+	}
 }
 
 func TestFromIOFS(t *testing.T) {
@@ -259,7 +358,6 @@ func TestFromIOFS_File(t *testing.T) {
 		// MapFS files implements io.ReaderAt
 		b := make([]byte, 2)
 		_, err := file.ReadAt(b, 2)
-
 		if err != nil {
 			t.Errorf("ReadAt failed: %v", err)
 			return
@@ -319,7 +417,7 @@ func TestFromIOFS_File(t *testing.T) {
 				return
 			}
 
-			var expectedItems = []struct {
+			expectedItems := []struct {
 				Name  string
 				IsDir bool
 				Size  int64
@@ -371,7 +469,7 @@ func TestFromIOFS_File(t *testing.T) {
 				return
 			}
 
-			var expectedItems = []string{"dir1", "dir2", "test.txt"}
+			expectedItems := []string{"dir1", "dir2", "test.txt"}
 
 			if len(expectedItems) != len(items) {
 				t.Errorf("Items count mismatch, expected %d, got %d", len(expectedItems), len(items))
@@ -408,5 +506,47 @@ func assertPermissionError(t *testing.T, err error) {
 
 	if perr.Err != fs.ErrPermission {
 		t.Errorf("Expected (*fs.PathError).Err == fs.ErrPermisson, got %[1]T (%[1]v)", err)
+	}
+}
+
+func BenchmarkWalkDir(b *testing.B) {
+	osfs := NewBasePathFs(NewOsFs(), b.TempDir())
+
+	createSomeFiles := func(dirname string) {
+		for i := 0; i < 10; i++ {
+			f, err := osfs.Create(filepath.Join(dirname, fmt.Sprintf("test%d.txt", i)))
+			if err != nil {
+				b.Fatal(err)
+			}
+			f.Close()
+		}
+	}
+
+	depth := 10
+	for level := depth; level > 0; level-- {
+		dirname := ""
+		for i := 0; i < level; i++ {
+			dirname = filepath.Join(dirname, fmt.Sprintf("dir%d", i))
+			err := osfs.MkdirAll(dirname, 0o755)
+			if err != nil && !os.IsExist(err) {
+				b.Fatal(err)
+			}
+		}
+		createSomeFiles(dirname)
+	}
+
+	iofs := NewIOFS(osfs)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		err := fs.WalkDir(iofs, "", func(path string, d fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			return nil
+		})
+		if err != nil {
+			b.Fatal(err)
+		}
 	}
 }

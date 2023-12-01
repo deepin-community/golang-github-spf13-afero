@@ -1,7 +1,9 @@
 #!/usr/bin/make -f
 
+export DH_GOLANG_EXCLUDES := gcsfs
+
 %:
-	dh $@ --builddirectory=_build --buildsystem=golang --with=golang
+	dh $@ --builddirectory=_build --buildsystem=golang
 
 execute_after_dh_auto_test:
 	rm -rv _build/src/github.com/spf13/afero/sftpfs/test/
