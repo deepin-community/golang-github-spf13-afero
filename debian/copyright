@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Afero
 Source: https://github.com/spf13/afero
+Upstream-Name: Afero
 
 Files: *
 Copyright: 2014–2016 Steve Francia <steve.francia@gmail.com>
@@ -13,6 +13,10 @@ License: Apache-2.0
 
 Files: sftpfs/*
 Copyright: 2015 Jerry Jacobs <jerry.jacobs@xor-gate.org>
+License: Apache-2.0
+
+Files: gcsfs/*
+Copyright: 2021 Vasily Ovchinnikov <vasily@remerge.io>
 License: Apache-2.0
 
 Files: debian/*
